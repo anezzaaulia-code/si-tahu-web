@@ -36,8 +36,17 @@
                     {!! $p->aktifDijual ? '<span class="text-success">● Aktif</span>' : '<span class="text-danger">○ Non-aktif</span>' !!}
                 </td>
                 <td class="text-center">
-                    <button class="btn btn-sm btn-outline-primary">Edit</button>
-                    <button class="btn btn-sm btn-outline-danger">Hapus</button>
+                    <a href="/produk/{{ $p->id }}/edit"
+                        class="btn btn-sm btn-outline-primary">Edit</a>
+                    <form action="/produk/{{ $p->id }}"
+                        method="POST"
+                        style="display:inline-block;">
+                        @csrf
+                        @method('DELETE')
+                    <button type="submit"
+                        class="btn btn-sm btn-outline-danger"
+                        onclick="return confirm('Yakin hapus produk ini?')">Hapus</button>
+                    </form>
                 </td>
             </tr>
             @endforeach

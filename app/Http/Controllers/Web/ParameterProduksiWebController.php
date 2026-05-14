@@ -43,4 +43,43 @@ class ParameterProduksiWebController extends Controller
 
         return redirect('/parameter')->with('sukses', 'Parameter berhasil disimpan!');
     }
+
+    // Menampilkan form edit
+    public function edit($id)
+    {
+        $parameter = ParameterProduksi::findOrFail($id);
+        $produk = Produk::all();
+
+        return view('parameter.edit', compact('parameter', 'produk'));
+    }
+
+    // Update data parameter produksi
+    public function update(Request $request, $id)
+    {
+        $parameter = ParameterProduksi::findOrFail($id);
+
+        $parameter->idProduk = $request->input('idProduk');
+        $parameter->kodeProduk = $request->input('kodeProduk');
+        $parameter->namaProduk = $request->input('namaProduk');
+        $parameter->hasilPerProduksi = $request->input('hasilPerProduksi');
+        $parameter->satuanHasil = $request->input('satuanHasil');
+        $parameter->catatan = $request->input('catatan');
+        $parameter->aktif = $request->has('aktif') ? 1 : 0;
+
+        $parameter->save();
+
+        return redirect('/parameter')
+            ->with('sukses', 'Parameter produksi berhasil diupdate!');
+    }
+
+    // Hapus data parameter produksi
+    public function destroy($id)
+    {
+        $parameter = ParameterProduksi::findOrFail($id);
+
+        $parameter->delete();
+
+        return redirect('/parameter')
+            ->with('sukses', 'Parameter produksi berhasil dihapus!');
+    }
 }

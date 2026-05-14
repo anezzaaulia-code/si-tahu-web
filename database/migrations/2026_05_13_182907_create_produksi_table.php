@@ -8,24 +8,30 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('produk', function (Blueprint $table) {
+        Schema::create('produksi', function (Blueprint $table) {
+
             $table->string('id')->primary();
+
+            $table->string('idProduk');
             $table->string('kodeProduk');
             $table->string('namaProduk');
-            $table->string('jenisProduk');
+
+            $table->integer('jumlahProduksi');
             $table->string('satuan');
-            $table->integer('stokSaatIni');
-            $table->integer('stokMinimum');
-            $table->boolean('tampilDiKasir');
-            $table->boolean('aktifDijual');
-            $table->string('urlFoto')->nullable();
+
+            $table->date('tanggalProduksi');
+
+            $table->text('catatan')->nullable();
+
             $table->timestamp('dibuatPada')->useCurrent();
-            $table->timestamp('diperbaruiPada')->useCurrent()->useCurrentOnUpdate();
+            $table->timestamp('diperbaruiPada')
+                  ->useCurrent()
+                  ->useCurrentOnUpdate();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('produk');
+        Schema::dropIfExists('produksi');
     }
 };

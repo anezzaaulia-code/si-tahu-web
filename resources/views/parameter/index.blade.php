@@ -27,7 +27,7 @@
                     <small class="text-muted" style="font-size: 11px;">{{ $item->id }}</small>
                 </div>
             </div>
-            
+
             <div class="d-flex justify-content-between align-items-center mt-2">
                 <div class="d-flex gap-2">
                     <span class="badge" style="background-color: #fdf3c8; color: #b08d13; font-size: 11px;">
@@ -39,7 +39,21 @@
                     {{ $item->hasilPerProduksi }} {{ $item->satuanHasil }}
                 </div>
             </div>
-            
+
+            <div class="d-flex gap-2 mt-3">
+                <a href="/parameter/{{ $item->id }}/edit"
+                class="btn btn-sm btn-outline-primary w-100">Edit</a>
+                <form action="/parameter/{{ $item->id }}"
+                    method="POST"
+                    class="w-100">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit"
+                            class="btn btn-sm btn-outline-danger w-100"
+                            onclick="return confirm('Yakin hapus parameter ini?')">Hapus</button>
+                </form>
+            </div>
+
             @if($item->catatan)
             <div class="mt-2 pt-2 border-top">
                 <small class="text-muted italic">"{{ $item->catatan }}"</small>
@@ -54,5 +68,23 @@
     @endforelse
 </div>
 
-<a href="/parameter/tambah" class="fab">+</a>
+<a href="/parameter/tambah"
+   style="
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 60px;
+        height: 60px;
+        background-color: #344e2d;
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+        font-size: 36px;
+        font-weight: bold;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        z-index: 9999;
+   ">+</a>
 @endsection

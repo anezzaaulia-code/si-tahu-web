@@ -23,13 +23,26 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="mt-3 d-flex justify-content-between align-items-center">
                 <div>
                     @if($item->aktif) <span class="badge bg-success small">Aktif</span> @endif
                     @if($item->hargaUtama) <span class="badge bg-warning text-dark small">Utama</span> @endif
                 </div>
                 <div class="fw-bold fs-5" style="color: #344e2d;">Rp {{ number_format($item->hargaSatuan, 0, ',', '.') }}</div>
+            </div>
+            <div class="d-flex gap-2 mt-3">
+                <a href="/harga/{{ $item->id }}/edit"
+                class="btn btn-sm btn-outline-primary w-100">Edit</a>
+                <form action="/harga/{{ $item->id }}"
+                    method="POST"
+                    class="w-100">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit"
+                            class="btn btn-sm btn-outline-danger w-100"
+                            onclick="return confirm('Yakin hapus harga ini?')">Hapus</button>
+                </form>
             </div>
         </div>
     </div>
@@ -38,5 +51,23 @@
     @endforelse
 </div>
 
-<a href="/harga/tambah" class="fab">+</a>
+<a href="/harga/tambah"
+   style="
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 60px;
+        height: 60px;
+        background-color: #344e2d;
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+        font-size: 36px;
+        font-weight: bold;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        z-index: 9999;
+   ">+</a>
 @endsection

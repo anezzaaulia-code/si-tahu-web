@@ -23,7 +23,7 @@ class ProdukWebController extends Controller
 
     // 3. Fungsi store() buat nyimpen data dari form ke database
     public function store(Request $request)
-{
+    {
     $id_baru = 'prd_' . time();
 
     \App\Models\Produk::create([
@@ -40,5 +40,42 @@ class ProdukWebController extends Controller
 
     return redirect('/produk')->with('sukses', 'Produk berhasil ditambah!');
 
+    }
+
+        // 4. Fungsi edit() buat nampilin form edit
+    public function edit($id)
+    {
+        $produk = Produk::findOrFail($id);
+
+        return view('produk.edit', compact('produk'));
+    }
+
+    // 5. Fungsi update() buat update data produk
+    public function update(Request $request, $id)
+    {
+        $produk = Produk::findOrFail($id);
+
+        $produk->update([
+            'kodeProduk' => $request->kodeProduk,
+            'namaProduk' => $request->namaProduk,
+            'jenisProduk' => $request->jenisProduk,
+            'satuan' => $request->satuan,
+            'stokSaatIni' => $request->stokSaatIni,
+            'stokMinimum' => $request->stokMinimum,
+            'tampilDiKasir' => $request->tampilDiKasir ?? 0,
+            'aktifDijual' => $request->aktifDijual ?? 1,
+        ]);
+
+        return redirect('/produk')->with('sukses', 'Produk berhasil diupdate!');
+    }
+
+    // 6. Fungsi destroy() buat hapus data
+    public function destroy($id)
+    {
+        $produk = Produk::findOrFail($id);
+
+        $produk->delete();
+
+        return redirect('/produk')->with('sukses', 'Produk berhasil dihapus!');
     }
 }
