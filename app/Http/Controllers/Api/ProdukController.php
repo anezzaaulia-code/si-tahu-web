@@ -30,16 +30,14 @@ class ProdukController extends Controller
         $kode_baru = 'KDP-' . rand(1000, 9999);
 
         // 3. Simpan ke database dengan data yang diracik lengkap
-        $produk = Produk::create([
-            'id'            => $id_baru,
-            'kodeProduk'    => $kode_baru,
-            'namaProduk'    => $request->namaProduk,
-            'jenisProduk'   => $request->jenisProduk,
-            'satuan'        => $request->satuan,
-            'stokSaatIni'   => $request->stokSaatIni,
-            'stokMinimum'   => $request->stokMinimum,
-            'tampilDiKasir' => $request->tampilDiKasir,
-            'aktifDijual'   => $request->aktifDijual
+        $produk->update([
+        'namaProduk'    => $request->namaProduk,
+        'jenisProduk'   => $request->jenisProduk,
+        'satuan'        => $request->satuan,
+        'stokSaatIni'   => $request->stokSaatIni ?? $produk->stokSaatIni,
+        'stokMinimum'   => $request->stokMinimum,
+        'tampilDiKasir' => $request->tampilDiKasir,
+        'aktifDijual'   => $request->aktifDijual
         ]);
 
         return response()->json([
